@@ -44,3 +44,7 @@
 #### 工作流选择
 
 gitflow
+
+#### 部署
+* 使用docker
+* 使用drone作为CI工具
