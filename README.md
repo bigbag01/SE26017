@@ -1,4 +1,5 @@
 # 流浪交大
+[![Build Status](https://cloud.drone.io/api/badges/bigbag01/SE26017/status.svg)](https://cloud.drone.io/bigbag01/SE26017)
 
 ### 成员
 
