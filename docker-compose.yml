@@ -10,7 +10,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
     environment:
-      - DRONE_SERVER_HOST=${DRONE_SERVER_HOST}
+      - DRONE_SERVER_HOST=112.74.62.160:8081
       - DRONE_SERVER_PROTO=${DRONE_SERVER_PROTO}
       - DRONE_SERVER_PORT=:8081
       - DRONE_TLS_AUTOCERT=false
