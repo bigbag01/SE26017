@@ -1,5 +1,5 @@
 # 流浪交大
-[![Build Status](https://cloud.drone.io/api/badges/bigbag01/SE26017/status.svg)](https://cloud.drone.io/bigbag01/SE26017)
+[![Build Status](http://112.74.62.160:8081/api/badges/bigbag01/SE26017/status.svg)](http://112.74.62.160:8081/bigbag01/SE26017)
 
 ### 成员
 
