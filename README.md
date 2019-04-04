@@ -46,5 +46,18 @@
 gitflow
 
 #### 部署
-* 使用docker
-* 使用drone作为CI工具
+* 租用阿里云服务器，启用docker，使用drone作为CI工具，参考这篇[博客](<https://mritd.me/2018/03/30/set-up-drone-ci/>)进行搭建，个人认为这是参考价值最大的一篇。
+
+  * 配置文件详见`docker-compose.yml`
+  * 为了后续的集成需在根目录配置`.drone.yml`
+
+  **CI效果**
+
+  ![](img\bulidsuccess.jpg)
+
+* **踩过的坑**
+  * 阿里云服务器购买时选择了预先配置过的服务器，未开放8081端口，需手动添加
+
+  * 在docker上部署完drone之后，项目一直显示**build none**,push后没有任何反应，参考了这篇指导[文章](https://discourse.drone.io/t/nothing-happens-when-i-push-code-no-builds-or-builds-stuck-in-pending/3424)后发现是webhook的配置问题，添加服务器对应的端口号方能正确hook。
+
+    ![](img\webhooks.jpg)
