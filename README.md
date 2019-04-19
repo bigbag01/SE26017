@@ -61,3 +61,8 @@ gitflow
   * 在docker上部署完drone之后，项目一直显示**build none**,push后没有任何反应，参考了这篇指导[文章](https://discourse.drone.io/t/nothing-happens-when-i-push-code-no-builds-or-builds-stuck-in-pending/3424)后发现是webhook的配置问题，添加服务器对应的端口号方能正确hook。
 
     ![](img/webhooks.jpg)
+
+#### 子模块
+* 本项目前端和后端分别在YellyYU/WanderSJTU-front和YellyYU/WanderSJTU-backend两个子项目中开发。
+
+  * 子模块的使用参考[文章](https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97)。

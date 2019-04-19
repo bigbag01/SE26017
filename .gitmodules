@@ -1,3 +1,6 @@
 [submodule "WanderSJTU-front"]
 	path = WanderSJTU-front
 	url = https://github.com/YellyYU/WanderSJTU-front
+[submodule "WanderSJTU-backend"]
+	path = WanderSJTU-backend
+	url = https://github.com/YellyYU/WanderSJTU-backend
