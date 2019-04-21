@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>流浪交大</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"></head>
+	<style>
+		html,body,#map{
+			height: 100%;
+			width:100%;
+			overflow: hidden;
+			margin:0;
+		}
+	</style>
+</head>
+<body>
+<div id="map"></div>
+<script src="https://api.map.baidu.com/api?v=2.0&ak=2oIXvO1rZQlkpx4L4AROANxYxrefKUDc"></script>
+<script src="http://mapv.baidu.com/build/mapv.min.js"></script>
+<script type="text/javascript">
+	var map = new BMap.Map('map')
+	var point = new BMap.Point(121.443287,31.03201);
+	map.centerAndZoom(point, 12);
+	var pt = new BMap.Point(121.44899, 31.028955);
+	var myIcon = new BMap.Icon("http://lbsyun.baidu.com/jsdemo/img/fox.gif", new BMap.Size(300,157));
+	var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+	map.addOverlay(marker);   
+	var geolocation = new BMap.Geolocation();
+	geolocation.enableSDKLocation();
+	geolocation.getCurrentPosition(r=>{
+		var mk=new BMap.Marker(r.point);
+		map.addOverlay(mk);
+	})
+</script>
+</body>
+</html>
