@@ -63,6 +63,12 @@ delete resources: `microk8s.kubectl delete -f <config-files>` or use `microk8s.k
 microk8s.stop
 ```
 
+###### start microk8s:
+
+```
+microk8s.start
+```
+
 ### Removing MicroK8s
 
 Before removing MicroK8s, use `microk8s.reset` to stop al running pods.
@@ -71,12 +77,49 @@ Before removing MicroK8s, use `microk8s.reset` to stop al running pods.
 microk8s.reset
 snap remove microk8s
 ```
+Note: life cycle of PersistentVolume is independent of pods, thus you need to manually remove these resources, otherwise it will persist (even after a system reboot!):
+
+```
+microk8s.kubectl delete pv <pv-name>
+```
 
 ### Port existing docker compose to Kubernetes:
 
-Based on existing docker-compose.yml we have successfully run with docker, we are looking for methods to directly porting it to kubernetes. [this guide](https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/) is what we mainly refer to.
+Based on existing docker-compose.yml we have successfully run with docker, we are looking for methods to directly porting it to kubernetes. We choose to use kompose tool. Steps for CentOS are listed below. To use kompose on other systems, please refer to [this guide](https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/).
+###### Install Kompose
+Kompose is in EPEL CentOS repository. If you don’t have EPEL repository already installed and enabled you can do it by running `sudo yum install epel-release`
 
-After the `kubectl apply -f <yaml-files>` command returns with several `<services-or-other> created` outputs, check everything goes well with the foilowing commands:
+If you have EPEL enabled in your system, you can install Kompose like any other package.
+
+```
+sudo yum -y install kompose
+```
+
+###### Use Kompose
+Go to the directory containing your `docker-compose.yml` file. To convert the `docker-compose.yml` file to files that you can use with kubectl, run `kompose convert` and then `kubectl apply -f <output file>`.
+
+```
+  $ kompose convert                           
+  INFO Kubernetes file "frontend-service.yaml" created         
+  INFO Kubernetes file "redis-master-service.yaml" created     
+  INFO Kubernetes file "redis-slave-service.yaml" created      
+  INFO Kubernetes file "frontend-deployment.yaml" created      
+  INFO Kubernetes file "redis-master-deployment.yaml" created  
+  INFO Kubernetes file "redis-slave-deployment.yaml" created    
+```
+
+```
+ $ kubectl apply -f frontend-service.yaml,redis-master-service.yaml,redis-slave-service.yaml,frontend-deployment.yaml,redis-master-deployment.yaml,redis-slave-deployment.yaml
+  service/frontend created
+  service/redis-master created
+  service/redis-slave created
+  deployment.apps/frontend created
+  deployment.apps/redis-master created
+  deployment.apps/redis-slave created
+```
+Your deployments are running in Kubernetes.
+
+Check everything goes well:
 
 ```
 microk8s.kubectl get all
@@ -93,4 +136,3 @@ microk8s.kubectl describe <resource-name>
 
    To make the cluster run you have to setup PersistentVolume manually. Kubernetes supports hostPath for development and testing on a single-node cluster if a host-based volume is still what you want. See [this guide](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/) for detailed configurations.
 
-   **we are still having trouble with the storageClass, gonna look into this issue later.**
