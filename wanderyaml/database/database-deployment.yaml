@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: mysql
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql
+        name: mysql
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "123456"
+

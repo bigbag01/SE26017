@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wandersjtu
+  labels:
+    app: sjtu
+spec:
+  type: NodePort 
+  ports:
+    - port: 30406
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 30406
+  selector:
+    app: sjtu
+    tier: compute
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: wandersjtu
+  labels:
+    app: sjtu
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: sjtu
+        tier: compute
+    spec:
+      containers:
+        - image: hhhhhholic/wandering
+          imagePullPolicy: Always
+          name: wandersjtu
+          ports:
+            - containerPort: 8080
+

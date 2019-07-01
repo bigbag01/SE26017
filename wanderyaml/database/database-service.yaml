@@ -1,0 +1,18 @@
+# kubectl create -f - <<EOF
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mysql
+  name: mysql
+spec:
+  type: LoadBalancer 
+  ports:
+  - port: 30401
+    nodePort: 30401
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    app: mysql
+
+
