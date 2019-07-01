@@ -4,3 +4,6 @@
 [submodule "WanderSJTU-backend"]
 	path = WanderSJTU-backend
 	url = https://github.com/YellyYU/WanderSJTU-backend
+[submodule "prometheus-operator"]
+	path = prometheus-operator
+	url = https://github.com/coreos/prometheus-operator.git

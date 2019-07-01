@@ -62,4 +62,37 @@ sudo systemctl restart docker
 ```
 
 ## Proxy
+refer to proxy.md
 
+## Install Kubernetes using Kubeadm
+
+#### Installing Kubectl, Kubeadm, and Kubelet
+```
+apt-get update && apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+apt-mark hold kubelet kubeadm kubectl
+```
+
+#### Creating a single control-plane cluster with kubeadm
+We use Calico cni in our case
+```
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+# apply cni
+sudo kubectl apply -f https://docs.projectcalico.org/v3.7/manifests/calico.yaml
+# check control plane
+sudo kubectl get pods --all-namespaces
+```
+Note: `kubeadm init` command might fail in hundreds of ways (we experienced quite a lot!),
+before execute this command again, use`kubeadm reset` to clean the previous configs.
+
+#### Join slave nodes
+ssh to salve node, execute
+```
+kubeadm join --token <token> <master-ip>:<master-port> --discovery-token-ca-cert-hash sha256:<hash>
+```
+This command also appears in outputs of `kubeadm init`.
